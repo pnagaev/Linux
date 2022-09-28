@@ -1,0 +1,58 @@
+For console programs
+Ex: wget, git and almost every console application which connects to internet.
+
+If you want to configure proxy every time you run your commands for some reason then set the environment variables using following commands.
+
+export http_proxy=http://DOMAIN\USERNAME:PASSWORD@SERVER:PORT/
+export ftp_proxy=http://DOMAIN\USERNAME:PASSWORD@SERVER:PORT/
+
+Else if you want to use the same settings everytime for all users, then use of these.
+
+Configure in bashrc
+$ nano /etc/bash.bashrc
+export http_proxy=http://DOMAIN\USERNAME:PASSWORD@SERVER:PORT/
+export ftp_proxy=http://DOMAIN\USERNAME:PASSWORD@SERVER:PORT/
+
+Configure in /etc/environment
+
+$ nano /etc/environment
+https_proxy="http://myproxy.server.com:8080/" 
+ftp_proxy="http://myproxy.server.com:8080/" ...
+
+Configure using GUI
+Open the network settings and set the your system wide network proxy.
+Network -> Network proxy -> Configure -> Apply system wide.
+But this might not be useful if you have authentication for the proxy.
+
+For apt.
+You need to do some extra work for apt, as incidentally apt doesn't obey environment variables,
+
+$ nano /etc/apt/apt.conf
+Acquire::http::Proxy "http://USERNAME:PASSWORD@SERVER:PORT";
+Acquire::https::Proxy "https://USERNAME:PASSWORD@SERVER:PORT";
+
+For everything out of this scope, there must be an option to configure proxy settings in the application itself. If not I'm sorry ;)
+
+From <https://askubuntu.com/questions/257290/configure-proxy-for-apt> 
+
+
+
+f you need to use apt behind a proxy, probably everything else also needs the proxy config. I like to manage my proxy settings in one place, which would be the environment variable.
+For that I create a /etc/profiles.d/99-proxy.sh, that contains the necessary proxy settings (like larent described):
+
+export http_proxy=http://DOMAIN\USERNAME:PASSWORD@SERVER:PORT/
+export https_proxy=$http_proxy
+export ftps_proxy=$http_proxy
+
+that way, all users on that machine have access to the proxy. (don't forget chmod a+x)
+When you use apt or apt-get as a user, that user is able to use sudo. Like Frank Qiu described, sudo does not pass environment variables. For that you can add
+
+Defaults env_keep += "http_proxy https_proxy ftp_proxy"
+to (e.g.)
+
+/etc/sudoers.d/00-environment 
+or directly into the
+
+/etc/sudoers
+
+file. That way you only have to manage the proxy settings in one place.
