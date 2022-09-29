@@ -1,1 +1,1 @@
-# [Linux заметки](/Linux/wiki)
+# [Linux заметки](Linux/wiki)
