@@ -1,1 +1,1 @@
-# LinuxConfig
+# [Linux заметки](/Linux/wiki)
