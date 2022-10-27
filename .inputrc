@@ -1,0 +1,7 @@
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[1~": beginning-of-line    #CTRL+A
+"\e[4~": end-of-line          #CTRL+E   
+"\e":  kill-whole-line                  
+"\eOC":forward-word
+"\eOD":backward-word
