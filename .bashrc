@@ -16,9 +16,9 @@ alias fastping='ping -c 100 -s.2'
 
 
 
-alias ls='ls --color=auto'
-alias ll='ls -la'
-alias l.='ls -d .* --color=auto'
+alias ls='ls -h --group-directories-first --color=auto'
+alias ll='ls -lah --group-directories-first --color=auto'
+alias l.='ls -dh .* --color=auto'
 alias cd..='cd ..'
 
 alias grep='grep --color=auto'
