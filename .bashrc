@@ -60,6 +60,8 @@ echo -e "\n"
 
 #figlet -f pagga.tlf  CommuniGate | lolcat
 
+#Last log users for 3 latest days
+lastlog -t 3
 
 
 
