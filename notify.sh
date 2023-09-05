@@ -1,10 +1,11 @@
 #!/bin/bash
-
+##
+## New IP login notification script
+##
 ## This script will email the contact specified below whenever
-## a user logs into the system. The email will contain the
+## a user logs into the system from a IP address. The email will contain the
 ## username, IP address and geolocation info for the login as well as current system
 ## stats (running processes, other logged in users, network connections, etc).
-##
 ##
 ## Installation:
 ##     - Install GeoIP (ver 1.6+).
@@ -23,8 +24,7 @@ TMP_DIR=$(mktemp -d -t notify-XXXXXXXXXX)
 trap delete_TMP_DIR EXIT
 
 FROM_ADDR="notify@senderdomain.ru"
-NOTIFY_ADDR="ivan.ivanovv@recipientdomain.ru"
-
+NOTIFY_ADDR="ivan@recipientdomain.ru"
 
 LOG_USER="$( whoami )"
 LOG_DATE="$( date "+%Y-%m-%d %H:%M:%S" )"
@@ -76,5 +76,8 @@ Attaching other relevant system data.
 
 EOF
 ) | /usr/bin/mutt -s "[LOGIN] $(hostname) ${LOG_USER} login from ${LOG_IP} [${GEO_LOC}] " \
-  -e "my_hdr From:Alert ROSCHAT <${FROM_ADDR}>"  "${NOTIFY_ADDR}"
+  -e "my_hdr From:Alert ROSCHAT <${FROM_ADDR}>" \
+  -a $TMP_DIR/netstat-listen.txt -a $TMP_DIR/netstat.txt -a $TMP_DIR/processes.txt -a $TMP_DIR/who.txt \
+  -- "${NOTIFY_ADDR}"
 fi
+delete_TMP_DIR
