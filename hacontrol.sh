@@ -1,5 +1,5 @@
 #!/bin/bash
-# HAcontrol.sh
+# hacontrol.sh
 # Simple script for HAProxy management
 #
 #
