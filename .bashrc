@@ -12,11 +12,6 @@ else
      export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\h\[\e[38;5;220m\]]\[\e[38;5;11    8m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
 fi
 
-#user
-export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\h\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
-
-#admin
-export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\h\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"  
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -67,9 +62,10 @@ echo -e "\n"
 
 #figlet -f pagga.tlf  CommuniGate | lolcat
 
+if [ "$(id -u)" -ne 0 ]; then
 #Last log users for 3 latest days
 lastlog -t 3
-
+fi
 
 
 
