@@ -1,5 +1,5 @@
 #!/bin/bash
-# hacontrol.sh
+#
 # Simple script for HAProxy management
 #
 #
@@ -16,7 +16,8 @@ echo -e '\n HAProxy service script \n
         6.Check
         7.Log
         8.Tail
-        9.Quit
+        9.Debug
+        Z.Quit
 '
 read -p "Your choice:" choice
 
@@ -69,14 +70,23 @@ do
         ;;
 
         "8")
-           echo "$Tail - Tail"
+           echo "$choice - Tail"
 
-         sudo tail -n 5 /var/log/haproxy.log
+         sudo tail -f /var/log/haproxy.log
 
         ;;
 
 
         "9")
+           echo "$choice - Debug"
+
+
+
+
+         # sudo systemctl stop haproxy.service
+           sudo haproxy -d -f /etc/haproxy/haproxy.cfg
+        ;;
+        "Z"|"z")
            echo "Bye!"
                 x=1
            break;;
