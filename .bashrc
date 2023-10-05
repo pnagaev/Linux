@@ -6,10 +6,10 @@ esac
 
 if [ "$(id -u)" -ne 0 ]; then
      #user
-     export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\h\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
+     export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
 else
      #admin
-     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\h\[\e[38;5;220m\]]\[\e[38;5;11    8m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
+     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;11    8m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
 fi
 
 
@@ -64,7 +64,7 @@ echo -e "\n"
 
 if [ "$(id -u)" -ne 0 ]; then
 #Last log users for 3 latest days
-lastlog -t 3
+last -5
 fi
 
 
