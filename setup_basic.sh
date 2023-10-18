@@ -15,17 +15,17 @@ IPurple='\033[0;95m'      # Purple
 ICyan='\033[0;96m'        # Cyan
 IWhite='\033[0;97m'       # White
 
-printf "OS:${IYellow} $MyOS "
+printf "\n OS:${IYellow} $MyOS ${NC} "
 
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
-  printf  "${IGreen}Updating system..."  
+  printf  "\n ${IGreen}Updating system...${NC}"  
   apt -y update && apt -y upgrade
-  printf  "${IGreen}Installing software..."
+  printf  "\n ${IGreen}Installing software...${NC}"
   apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
 if [[ "$MyOS" == @(Centos) ]];then
-  printf  "${IGreen}Updating system..."
+  printf  "\n ${IGreen}Updating system...${NC}"
   yum -y update && yum -y upgrade
-  printf  "${IGreen}Installing software..."
+  printf  "\n ${IGreen}Installing software...${NC}"
   yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
