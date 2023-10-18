@@ -7,9 +7,9 @@ MyOS=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}' |
 
 echo "OS: $MyOS "
 
-if [ "$MyOS" =~ ^("Debian|RedHat|Astra") ];then
+if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
   apt -y update && apt -y upgrade
 fi
-if [ "$MyOS" =~ ^("Centos") ];then
+if [[ "$MyOS" == ^(Centos) ]];then
   yum -y update && yum -y upgrade
 fi
