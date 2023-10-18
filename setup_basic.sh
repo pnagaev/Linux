@@ -9,7 +9,9 @@ echo "OS: $MyOS "
 
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
   apt -y update && apt -y upgrade
+  apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
 if [[ "$MyOS" == @(Centos) ]];then
   yum -y update && yum -y upgrade
+  yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
