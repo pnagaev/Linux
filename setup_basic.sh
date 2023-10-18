@@ -10,6 +10,6 @@ echo "OS: $MyOS "
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
   apt -y update && apt -y upgrade
 fi
-if [[ "$MyOS" == ^(Centos) ]];then
+if [[ "$MyOS" == (Centos) ]];then
   yum -y update && yum -y upgrade
 fi
