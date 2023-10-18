@@ -7,7 +7,7 @@ if [ "$(id -u)" -ne 0 ]; then
      export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
 else
      #admin
-     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;11    8m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
+     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
 fi
 
 
@@ -23,17 +23,17 @@ IPurple='\033[0;95m'      # Purple
 ICyan='\033[0;96m'        # Cyan
 IWhite='\033[0;97m'       # White
 
-printf "\n OS:${IYellow} $MyOS ${NC} "
+printf "\n\n OS:${IYellow} $MyOS ${NC} "
 
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
-  printf  "\n ${IGreen}Updating system...${NC}"  
+  printf  "\n\n ${IGreen}Updating system...${NC}"  
   apt -y update && apt -y upgrade
-  printf  "\n ${IGreen}Installing software...${NC}"
+  printf  "\n\n ${IGreen}Installing software...${NC}"
   apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
 if [[ "$MyOS" == @(Centos) ]];then
-  printf  "\n ${IGreen}Updating system...${NC}"
+  printf  "\n\n ${IGreen}Updating system...${NC}"
   yum -y update && yum -y upgrade
-  printf  "\n ${IGreen}Installing software...${NC}"
+  printf  "\n\n ${IGreen}Installing software...${NC}"
   yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
 fi
