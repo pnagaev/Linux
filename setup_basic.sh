@@ -3,4 +3,6 @@
 #     wget -q -O - https://raw.githubusercontent.com/pnagaev/linux/main/setup_basic.sh | bash
 
 
-echo "Hello World"
+MyOS=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}' | tr -d '"')
+
+echo "OS: $MyOS "
