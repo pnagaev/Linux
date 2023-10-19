@@ -26,14 +26,62 @@ IWhite='\033[0;97m'       # White
 printf "\n\n OS:${IYellow} $MyOS ${NC} "
 
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
-  printf  "\n\n ${IGreen}Updating system...${NC}"  
-  apt -y update && apt -y upgrade
-  printf  "\n\n ${IGreen}Installing software...${NC}"
-  apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
+  printf  "\n\n ${IGreen}Updating system...${NC}\n\n"
+#  apt -y update && apt -y upgrade
+  printf  "\n\n ${IGreen}Installing software...${NC}\n\n"
+#  apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
+
 fi
 if [[ "$MyOS" == @(Centos) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}"
   yum -y update && yum -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}"
-  yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois
+  yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
+
 fi
+
+
+ printf  "\n\n ${IGreen}Saving old config files...${NC}\n\n"
+
+        mkdir -p old
+
+        mv ".bash_aliases" "old/.bash_aliases.$(date +%H%M%S)"
+        mv ".bashrc" "old/.bashrc.$(date +%H%M%S)"
+        mv ".inputrc" "old/.inputrc.$(date +%H%M%S)"
+        mv ".vimrc" "old/.vimrc.$(date +%H%M%S)"
+
+printf  "\n\n ${IGreen}Copy config files...${NC}\n\n"
+
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.bash_aliases
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.bashrc
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.inputrc
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.vimrc
+
+
+printf  "\n\n ${IGreen}Setting hostname...${NC}\n\n"
+printf  "\n\n ${IYellow}Current hostname is $(hostname) ${NC}\n\n"
+
+read -p $'\033[0;93mEnter your hostname:\033[0;0m' MyHostName
+
+
+if [ -z "$MyHostName" ]
+then
+      echo " Hostname: $MyHostName is wrong"
+else
+      echo " $MyHostName "
+
+hostnamectl set-hostname $MyHostName
+
+fi
+
+
+printf  "\n\n ${IGreen}Setting timezone to Europe/Moscow...${NC}"
+
+timedatectl set-timezone Europe/Moscow
+echo 'NTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org' >> /etc/systemd/timesyncd.conf
+timedatectl set-ntp true
+systemctl enable --now systemd-timesyncd.service
+systemctl restart systemd-timesyncd.service
+systemctl status systemd-timesyncd.service
+timedatectl status
+timedatectl timesync-status
