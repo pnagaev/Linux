@@ -55,6 +55,17 @@ if ! shopt -oq posix; then
 fi
 
 
+ LS_COLORS="fi=01;37:di=01;35:ex=01;32:ln=37\
+ :or=01;30:mi=00:mh=31\
+ :pi=33:so=43;30:do=35\
+ :bd=35;01:cd=35\
+ :su=37;41:sg=30;43:ca=30;41\
+ :tw=07;34:ow=30;44:st=30;44"
+
+ export LS_COLORS
+
+
+
 echo -e "\n"
 #cpg.logo - Text from ASCII symbols file
 #cat cgp.logo | lolcat
