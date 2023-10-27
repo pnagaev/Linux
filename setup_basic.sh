@@ -77,11 +77,15 @@ fi
 
 printf  "\n\n ${IGreen}Setting timezone to Europe/Moscow...${NC}"
 
-timedatectl set-timezone Europe/Moscow
+sudo timedatectl set-timezone Europe/Moscow
 echo 'NTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org' >> /etc/systemd/timesyncd.conf
-timedatectl set-ntp true
-systemctl enable --now systemd-timesyncd.service
-systemctl restart systemd-timesyncd.service
-systemctl status systemd-timesyncd.service
-timedatectl status
-timedatectl timesync-status
+sudo timedatectl set-ntp true
+sudo systemctl enable --now systemd-timesyncd.service
+sudo systemctl restart systemd-timesyncd.service
+sudo systemctl status systemd-timesyncd.service
+sudo timedatectl status
+sudo timedatectl timesync-status
+
+sudo mv /etc/motd /etc/motd.old
+
+
