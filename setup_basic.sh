@@ -18,14 +18,14 @@ printf "\n\n OS:${IYellow} $MyOS ${NC} "
 
 if [[ "$MyOS" == @(Debian|Astra) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}\n\n"
-  sudo apt -y update && apt -y upgrade
+  sudo apt -y update && sudo apt -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}\n\n"
   sudo apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
 fi
 if [[ "$MyOS" == @(Centos|RedHat) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}"
-  sudo yum -y update && yum -y upgrade
+  sudo yum -y update && sudo yum -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}"
   sudo yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
@@ -69,7 +69,7 @@ printf  "\n\n ${IGreen}Copy config files...${NC}\n\n"
 printf  "\n\n ${IGreen}Setting hostname...${NC}\n\n"
 printf  "\n\n ${IYellow}Current hostname is $(hostname) ${NC}\n\n"
 
-read -p $'\033[0;93mEnter your hostname:\033[0;0m' MyHostName
+read -p '\033[0;93mEnter your hostname:\033[0;0m' MyHostName
 
 
 if [ -z "$MyHostName" ]
