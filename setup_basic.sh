@@ -69,7 +69,7 @@ printf  "\n\n ${IGreen}Copy config files...${NC}\n\n"
 printf  "\n\n ${IGreen}Setting hostname...${NC}\n\n"
 printf  "\n\n ${IYellow}Current hostname is $(hostname) ${NC}\n\n"
 
-read -p '\033[0;93mEnter your hostname:\033[0;0m' MyHostName
+read -p $'\033[0;93mEnter your hostname:\033[0;0m' MyHostName
 
 
 if [ -z "$MyHostName" ]
