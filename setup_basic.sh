@@ -94,6 +94,6 @@ sudo systemctl status systemd-timesyncd.service
 sudo timedatectl status
 sudo timedatectl timesync-status
 
-sudo mv /etc/motd /etc/motd.old
+sudo mv -f /etc/motd /etc/motd.old 2>/dev/null
 
 
