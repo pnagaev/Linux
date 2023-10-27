@@ -2,15 +2,6 @@
 # Run bash <(curl -s https://raw.githubusercontent.com/pnagaev/linux/main/setup_basic.sh)
 #     wget -q -O - https://raw.githubusercontent.com/pnagaev/linux/main/setup_basic.sh | bash
 
-if [ "$(id -u)" -ne 0 ]; then
-     #user
-     export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
-else
-     #admin
-     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
-fi
-
-
 MyOS=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}' | tr -d '"')
 
 NC='\033[0m' # No Color
@@ -25,19 +16,36 @@ IWhite='\033[0;97m'       # White
 
 printf "\n\n OS:${IYellow} $MyOS ${NC} "
 
-if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
+if [[ "$MyOS" == @(Debian|Astra) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}\n\n"
   sudo apt -y update && apt -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}\n\n"
   sudo apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
 fi
-if [[ "$MyOS" == @(Centos) ]];then
+if [[ "$MyOS" == @(Centos|RedHat) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}"
   sudo yum -y update && yum -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}"
   sudo yum -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
+fi
+
+if [ "$(id -u)" -ne 0 ]; then
+     #user
+     export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
+     if [[ "$MyOS" == @(Debian|Astra) ]];then
+       sudo  usermod -aG sudo ${USER}
+     fi
+     
+     if [[ "$MyOS" == @(Centos|RedHat) ]];then
+       sudo usermod -aG wheel ${USER}
+     fi
+
+    
+else
+     #admin
+     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
 fi
 
 
