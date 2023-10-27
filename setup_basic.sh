@@ -27,9 +27,9 @@ printf "\n\n OS:${IYellow} $MyOS ${NC} "
 
 if [[ "$MyOS" == @(Debian|RedHat|Astra) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}\n\n"
-#  apt -y update && apt -y upgrade
+  apt -y update && apt -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}\n\n"
-#  apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
+  apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
 fi
 if [[ "$MyOS" == @(Centos) ]];then
