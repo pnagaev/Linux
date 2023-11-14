@@ -1,6 +1,10 @@
-#!/bin/bash
+ #!/bin/bash
 # Run bash <(curl -s https://raw.githubusercontent.com/pnagaev/linux/main/setup_basic.sh)
 #     wget -q -O - https://raw.githubusercontent.com/pnagaev/linux/main/setup_basic.sh | bash
+#
+# Should be run only from root
+#
+
 
 MyOS=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}' | tr -d '"')
 
@@ -15,6 +19,8 @@ ICyan='\033[0;96m'        # Cyan
 IWhite='\033[0;97m'       # White
 
 printf "\n\n OS:${IYellow} $MyOS ${NC} "
+
+# INSTALL SOFTWARE
 
 if [[ "$MyOS" == @(Debian|Astra) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}\n\n"
@@ -31,69 +37,63 @@ if [[ "$MyOS" == @(Centos|RedHat) ]];then
 
 fi
 
-if [ "$(id -u)" -ne 0 ]; then
-     #user
-     export PS1="\[\e[01;37m\][\[\e[38;5;220m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[01;37m\]]\[\e[38;5;118m\]\w\[\e[38;5;220m\]➤\[\e[m\] "
-     if [[ "$MyOS" == @(Debian|Astra) ]];then
-       sudo  usermod -aG sudo ${USER}
-     fi
-     
-     if [[ "$MyOS" == @(Centos|RedHat) ]];then
-       sudo usermod -aG wheel ${USER}
-     fi
+# COPY CONFIG FILES
 
-    
-else
-     #admin
-     export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
-fi
+
+export PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;220m\][\[\e[38;5;196m\]\u\[\e[38;5;231m\]@\[\e[38;5;27m\]\H\[\e[38;5;220m\]]\[\e[38;5;118m\]\w\[\e[38;5;196m\]➤\[\e[00m\]"
 
 
  printf  "\n\n ${IGreen}Saving old config files...${NC}\n\n"
 
-        sudo mkdir -p old
+        mkdir -p old
 
-        sudo mv ".bash_aliases" "old/.bash_aliases.$(date +%H%M%S)"
-        sudo mv ".bashrc" "old/.bashrc.$(date +%H%M%S)"
-        sudo mv ".inputrc" "old/.inputrc.$(date +%H%M%S)"
-        sudo mv ".vimrc" "old/.vimrc.$(date +%H%M%S)"
+        mv ".bash_aliases" "old/.bash_aliases.$(date +%H%M%S)"
+        mv ".bashrc" "old/.bashrc.$(date +%H%M%S)"
+        mv ".inputrc" "old/.inputrc.$(date +%H%M%S)"
+        mv ".vimrc" "old/.vimrc.$(date +%H%M%S)"
 
 printf  "\n\n ${IGreen}Copy config files...${NC}\n\n"
 
-        sudo wget https://raw.githubusercontent.com/pnagaev/linux/main/.bash_aliases
-        sudo wget https://raw.githubusercontent.com/pnagaev/linux/main/.bashrc
-        sudo wget https://raw.githubusercontent.com/pnagaev/linux/main/.inputrc
-        sudo wget https://raw.githubusercontent.com/pnagaev/linux/main/.vimrc
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.bash_aliases
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.bashrc
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.inputrc
+        wget https://raw.githubusercontent.com/pnagaev/linux/main/.vimrc
+
+#copy colortheme for VIM
+
+mkdir -p .vim/colors
+curl -o .vim/colors/molokai.vim https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
 
 
-printf  "\n\n ${IGreen}Setting hostname...${NC}\n\n"
+# HOSTNAME
+
+#printf  "\n\n ${IGreen}Setting hostname...${NC}\n\n"
 printf  "\n\n ${IYellow}Current hostname is $(hostname) ${NC}\n\n"
 
-read -p $'\033[0;93mEnter your hostname:\033[0;0m' MyHostName
+#read -p $'\033[0;93mEnter your hostname:\033[0;0m' MyHostName
 
 
-if [ -z "$MyHostName" ]
-then
-      echo " Hostname: $MyHostName is wrong"
-else
-      echo " $MyHostName "
+#if [ -z "$MyHostName" ]
+#then
+#      echo " Hostname: $MyHostName is wrong"
+#else
+#      echo " $MyHostName "
 
-sudo hostnamectl set-hostname $MyHostName
+#hostnamectl set-hostname $MyHostName
 
-fi
+#fi
+
 
 
 printf  "\n\n ${IGreen}Setting timezone to Europe/Moscow...${NC}"
 
-sudo timedatectl set-timezone Europe/Moscow
+timedatectl set-timezone Europe/Moscow
 echo 'NTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org' >> /etc/systemd/timesyncd.conf
-sudo timedatectl set-ntp true
-sudo systemctl enable --now systemd-timesyncd.service
-sudo systemctl restart systemd-timesyncd.service
-sudo systemctl status systemd-timesyncd.service
-sudo timedatectl status
-sudo timedatectl timesync-status
+timedatectl set-ntp true
+systemctl enable --now systemd-timesyncd.service
+systemctl restart systemd-timesyncd.service
+systemctl status systemd-timesyncd.service
+timedatectl status
+timedatectl timesync-status
 
-sudo mv -f /etc/motd /etc/motd.old 2>/dev/null
-
-
+mv -f /etc/motd /etc/motd.old 2>/dev/null
