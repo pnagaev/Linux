@@ -29,7 +29,7 @@ if [[ "$MyOS" == @(Debian|Astra) ]];then
   sudo apt -y install vim telnet sudo wget ntpdate ntp mc htop iftop tzdata net-tools git curl man bash-completion dnsutils whois systemd-timesyncd
 
 fi
-if [[ "$MyOS" == @(Centos|RedHat) ]];then
+if [[ "$MyOS" == @(CentOS|RedHat) ]];then
   printf  "\n\n ${IGreen}Updating system...${NC}"
   sudo yum -y update && sudo yum -y upgrade
   printf  "\n\n ${IGreen}Installing software...${NC}"
